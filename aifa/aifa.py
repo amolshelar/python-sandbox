@@ -11,6 +11,7 @@ from sklearn.svm import SVC
 from sklearn.svm import LinearSVC
 import csv
 import math
+from sklearn import tree
 
 def get_data():
     df = pd.read_csv("train.csv")
@@ -53,7 +54,7 @@ df2, targets = encode_target(df, "Will the goal be achieved")
 #print df2
 #print targets
 
-features = ['Total Income per month','Total Expenses per month']
+features = ['Total Saving', 'Total Income per month','Total Expenses per month']
 
 y = df2["Target"]
 X = df2[features]
@@ -62,7 +63,8 @@ f1 = pd.read_csv("output.csv")
 
 output2=MultiColumnLabelEncoder(columns = ['Name','Goal Name']).fit_transform(f1)
 f1=output2
-X_test=pd.DataFrame(f1, columns = ['Total Income per month','Total Expenses per month'])
+X_test=pd.DataFrame(f1, columns = ['Total Saving', 'Total Income per month','Total Expenses per month'])
+
   
 svc = LinearSVC(C=1.0)
 svc.fit(X,y)
@@ -71,6 +73,19 @@ global y_pred
 y_pred=svc.predict(X_test) 
     
 print y_pred    
+
+
+
+fruit_classifier = tree.DecisionTreeClassifier()
+fruit_classifier.fit(X, y)
+y_pred=fruit_classifier.predict(X_test) 
+print y_pred    
+columns = ['Total Saving', 'Total Income per month','Total Expenses per month']
+with open("fruit_classifier.txt", "w") as f:
+    f = tree.export_graphviz(fruit_classifier, out_file=f, class_names= columns)
+
+
+
 
 y_test=[1]
 def measure_performance(X,y,clf, show_accuracy=True, show_classification_report=True, show_confusion_matrix=True):
@@ -90,4 +105,4 @@ def measure_performance(X,y,clf, show_accuracy=True, show_classification_report=
         print ("Confusion matrix")
         print (metrics.confusion_matrix(y,y_pred),"\n")
       
-measure_performance(X_test,y_test,svc,show_classification_report=True, show_confusion_matrix=True)     
+ 
