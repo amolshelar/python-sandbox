@@ -104,5 +104,3 @@ def measure_performance(X,y,clf, show_accuracy=True, show_classification_report=
     if show_confusion_matrix:
         print ("Confusion matrix")
         print (metrics.confusion_matrix(y,y_pred),"\n")
-      
- 
