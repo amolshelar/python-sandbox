@@ -4,10 +4,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.cross_validation import train_test_split
 from sklearn import metrics
 
-train_data = pd.read_csv("train.csv")
+train_data = pd.read_csv("train_full.csv")
 print ("Dataset Shape:: ", train_data.shape)
 
-features = ['Total Income per month','Total Expenses per month','Surplus per month','Goal Value in today value terms','Future Value of Goal']
+#features = ['Total Income per month','Total Expenses per month','Surplus per month','Goal Value in today value terms','Future Value of Goal']
+features = ['Total Income per month','Total Expenses per month','Surplus per month','Time to Goal (in months)','Goal Value in today value terms','Amount you intend to invest per month for this goal','How much savings you have now? (Rs)','Future Value of Existing savings','Value of future investment','Future Value of Goal']
 target = ['Will the goal be achieved']
 
 X = train_data[features]

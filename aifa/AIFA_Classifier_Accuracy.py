@@ -7,6 +7,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import export_graphviz
 from sklearn.cross_validation import train_test_split
 from sklearn import metrics 
+from collections import Counter
 
 train_data = pd.read_csv("train-full.csv")
 print "Dataset Shape:: ", train_data.shape
@@ -77,6 +78,7 @@ def measure_metrics (clf_desc, clf, X_train, y_train, X_test):
 #split data into training and test set
 #The parameter test_size is given value 0.3; it means test sets will be 30% of whole dataset  & training dataset’s size will be 70% of the entire dataset.
 X_train, X_test, y_train, y_test = train_test_split( X, y, test_size = 0.3, random_state = 100)
+print "Label count: ", Counter(y_train)
 
 clf_gini = DecisionTreeClassifier(criterion = "gini", random_state = 100, max_depth=3, min_samples_leaf=5)
 measure_metrics ("DecisionTreeClassifier-gini", clf_gini, X_train, y_train, X_test)
